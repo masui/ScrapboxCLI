@@ -9,7 +9,7 @@
   ページのテキストを取得する
   <li><b>sbbackups</b> project</li>
   バックアップデータをリストする
-  <li><b>sbexport</b> project
+  <li><b>sbexport</b> project</li>
     プロジェクトのデータをエクスポートする
     <br>
     Admin権限がなくても実行できる
