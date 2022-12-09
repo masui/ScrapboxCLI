@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+#
+# % sbbackups project
+#
+require 'json'
+
+project = ARGV[0]
+unless project
+  STDERR.puts "Scrapboxページのバックアップ情報を取得"
+  STDERR.puts "% sbbackups project"
+  exit
+end
+
+sid=`sid`.chomp
+list = JSON.parse(`wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/project-backup/#{project}/list'`)
+
+list['backups'].each { |backup|
+  id = backup['id']
+  puts "[#{Time.at(backup['backuped'])} https://scrapbox.io/api/project-backup/#{project}/#{id}.json]"
+}

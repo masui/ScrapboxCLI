@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+#
+# Scrapboxのページテキストを取得
+#
+# % sbtext masui settings
+#
+# sid=`sid`; wget -q -O - --header "cookie: connect.sid=$sid" "https://scrapbox.io/api/code/Scrapbox-api-usage/ページのテキストを取得する/sbtext.rb" | ruby - $*
+#
+
+sid = `sid`.chomp
+proj = ARGV[0]
+page = ARGV[1]
+if !proj || !page
+  STDERR.puts "Scrapboxのページテキストを取得"
+  STDERR.puts "% sbtext project page"
+  exit
+end
+system "wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/pages/#{proj}/#{page}/text'"

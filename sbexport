@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+#
+# プロジェクトのJSONデータを取得 (エクスポートしたのと同じデータを出力)
+#
+require 'JSON'
+
+sid = `sid`
+sid.chomp!
+
+project = ARGV[0]
+
+out = {}
+outpages = []
+out['pages'] = outpages
+
+titles = `sbtitles #{project}`.split(/\n/)
+i = 0
+titles.each { |title|
+  title.gsub!("/","%2F")
+
+  lines = `wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/pages/#{project}/#{title}/text'`
+
+  outdata = {}
+  outdata['title'] = title
+  outdata['lines'] = lines.gsub("\\t","\t").split(/\n/)
+  outpages << outdata
+  STDERR.puts i
+  i += 1
+}
+puts out.to_json

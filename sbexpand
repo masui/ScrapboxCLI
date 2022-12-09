@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# toshiyukimasui.json のあるところで以下を実行
+# % sbexpand toshiyukimasui
+#
+# wget -q -O - --header "cookie: connect.sid=`sid`" "https://scrapbox.io/api/code/masui/Scrapboxの検索窓をHelpfeel的に使う/expand.rb" | ruby - $1
+wget -q -O - "https://scrapbox.io/api/code/masui/Scrapboxの検索窓をHelpfeel的に使う/expand.rb" | ruby - $1

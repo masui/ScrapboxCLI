@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+#
+# Scrapboxのページタイトルのリストを取得
+#
+proj = ARGV[0]
+unless proj
+  STDERR.puts "Scrapboxプロジェクトのページタイトルのリストを取得"
+  STDERR.puts "Usage: % sbtitles project"
+  exit
+end
+
+sid = `sid`.chomp
+
+titles = []
+skip = 0
+
+while true do
+  a = `wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/pages/#{proj}?limit=1000&skip=#{skip}' | jq -r '.pages[].title'`.split(/\n/)
+
+  titles += a
+  skip += 1000
+  break if a.length < 1000
+end
+puts titles.join("\n")
+
+
