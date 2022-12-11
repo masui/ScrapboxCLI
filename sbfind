@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+#
+# プロジェクトのトップページを展開してリストする
+# プロジェクトをHelpfeel検索するかんじ
+#
+# % sbfind
+#
+
+require 're_expand'
+
+projects = `sbprojects`.split(/\n/)
+
+projects.each { |project|
+  # puts "project = #{project}"
+  toppage = `sbtop '#{project}'`.chomp
+  # puts "toppage = #{toppage}"
+  lines = `sbtext '#{project}' '#{toppage}'`.split(/\n/)
+  lines.each { |line|
+    if line =~ /^\s*\?\s+(.*)$/
+      helpline = $1
+      helpline.gsub(/\[/,'').gsub(/\]/,'').expand { |s|
+        puts "#{project}: #{s[0]}"
+      }
+    end
+  }
+}

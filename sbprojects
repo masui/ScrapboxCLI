@@ -3,4 +3,5 @@
 # Scrapboxのプロジェクトをリストする
 #
 
-sid=`sid`; wget -q -O - --header "cookie: connect.sid=$sid" https://scrapbox.io/api/projects | jq -r ".projects[].displayName" | tac
+# sid=`sid`; wget -q -O - --header "cookie: connect.sid=$sid" https://scrapbox.io/api/projects | jq -r ".projects[].displayName" | tac
+sid=`sid`; wget -q -O - --header "cookie: connect.sid=$sid" https://scrapbox.io/api/projects | jq -r ".projects[].name" | tac

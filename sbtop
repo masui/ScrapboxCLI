@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+#
+# Scrapboxのトップページのタイトルを取得
+#
+proj = ARGV[0]
+unless proj
+  STDERR.puts "Scrapboxプロジェクトのトップページのタイトルを取得"
+  STDERR.puts "Usage: % sbtitles project"
+  exit
+end
+
+sid = `sid`.chomp
+
+puts `wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/pages/#{proj}?limit=1' | jq -r '.pages[].title'`
+
+
