@@ -6,21 +6,34 @@
 # % sbfind
 #
 
+require 'json'
 require 're_expand'
 
 projects = `sbprojects`.split(/\n/)
+sid=`sid`.chomp
 
 projects.each { |project|
-  # puts "project = #{project}"
+  json = `wget -q -O - --header "cookie: connect.sid=#{sid}" "https://scrapbox.io/api/projects/#{project}"`
+  displayName = JSON.parse(json)['displayName']
+  expanded = false
+  if displayName != project
+    puts "#{project}: #{displayName}"
+    expanded = true
+  end
+  
   toppage = `sbtop '#{project}'`.chomp
-  # puts "toppage = #{toppage}"
   lines = `sbtext '#{project}' '#{toppage}'`.split(/\n/)
   lines.each { |line|
     if line =~ /^\s*\?\s+(.*)$/
       helpline = $1
       helpline.gsub(/\[/,'').gsub(/\]/,'').expand { |s|
         puts "#{project}: #{s[0]}"
+        puts "#{displayName}: #{s[0]}"
       }
+      expanded = true
     end
   }
+  if !expanded
+    puts "#{project}:"
+  end
 }
