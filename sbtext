@@ -15,4 +15,4 @@ if !proj || !page
   STDERR.puts "% sbtext project page"
   exit
 end
-system "wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/pages/#{proj}/#{page}/text'"
+system "wget -q -O - --header 'cookie: connect.sid=#{sid}' \"https://scrapbox.io/api/pages/#{proj}/#{page}/text\""
