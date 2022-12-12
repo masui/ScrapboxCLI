@@ -13,6 +13,7 @@ projects = `sbprojects`.split(/\n/)
 sid=`sid`.chomp
 
 projects.each { |project|
+  STDERR.puts project
   json = `wget -q -O - --header "cookie: connect.sid=#{sid}" "https://scrapbox.io/api/projects/#{project}"`
   displayName = JSON.parse(json)['displayName']
   expanded = false
@@ -22,7 +23,7 @@ projects.each { |project|
   end
   
   toppage = `sbtop '#{project}'`.chomp
-  lines = `sbtext '#{project}' '#{toppage}'`.split(/\n/)
+  lines = `sbtext '#{project}' "#{toppage}"`.split(/\n/) # タイトルに「"」とかあると困る
   lines.each { |line|
     if line =~ /^\s*\?\s+(.*)$/
       helpline = $1
