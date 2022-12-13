@@ -18,7 +18,9 @@ projects.each { |project|
   displayName = JSON.parse(json)['displayName']
   expanded = false
   if displayName != project
-    puts "#{project}: #{displayName}"
+    # puts "#{project}: #{displayName}"
+    puts "[[#{project}]]"
+    puts " [https://scrapbox.io/#{project} #{displayName}]"
     expanded = true
   end
   
@@ -28,13 +30,18 @@ projects.each { |project|
     if line =~ /^\s*\?\s+(.*)$/
       helpline = $1
       helpline.gsub(/\[/,'').gsub(/\]/,'').expand { |s|
-        puts "#{project}: #{s[0]}"
-        puts "#{displayName}: #{s[0]}"
+        # puts "#{project}: #{s[0]}"
+        # puts "#{displayName}: #{s[0]}"
+        puts "[[#{project}]]"
+        puts " [https://scrapbox.io/#{project} #{s[0]}]"
+        puts " [https://scrapbox.io/#{project} #{displayName}]"
       }
       expanded = true
     end
   }
   if !expanded
-    puts "#{project}:"
+    # puts "#{project}:"
+    puts "[[#{project}]]"
+    puts " [https://scrapbox.io/#{project} #{project}]"
   end
 }
