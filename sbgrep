@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+#
+# % sbgrep pat jsonfile
+#
+require 'json'
+
+pat = ARGV[0]
+jsonfile = ARGV[1]
+unless pat && jsonfile
+  STDERR.puts "% sbgrep pat jsonfile"
+  exit
+end
+unless File.exist?(jsonfile)
+  STDERR.puts "#{jsonfile} not found"
+  exit
+end
+
+outdata = {}
+pages = []
+outdata['pages'] = pages
+
+data = JSON.parse(File.read(jsonfile))
+
+data['pages'].each { |page|
+  title = page['title']
+  if title.index(pat)
+    pages.push(page)
+  end
+}
+
+puts outdata.to_json
+

@@ -28,6 +28,8 @@ data['pages'].each { |page|
     }
   end
 }
+
+npages = 0
   
 data['pages'].each { |page|
   title = page['title']
@@ -60,6 +62,8 @@ data['pages'].each { |page|
         if name != "" && name != title
           entry = {}
           entry['title'] = "_#{name}"
+          entry['created'] = 1600000000
+          entry['updated'] = 1600000000
           entry['lines'] = [
             "#{name}",
             "(expanded from [#{title}] [[このページは編集しないでください]])",
@@ -78,6 +82,8 @@ data['pages'].each { |page|
       # pages.push(page)
     end
   end
+  npages += 1
+  # break if npages > 5
 }
 
 puts outdata.to_json
