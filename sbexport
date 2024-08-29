@@ -16,7 +16,8 @@ out['pages'] = outpages
 titles = `sbtitles #{project}`.split(/\n/)
 i = 0
 titles.each { |title|
-  title.gsub!("/","%2F")
+  # title.gsub!("/","%2F")
+  title = title.gsub("/","%2F").gsub(/#/,'%23').gsub(/&/,'%26').gsub(/\?/,'%3F').gsub(/:/,'%3A')
 
   lines = `wget -q -O - --header 'cookie: connect.sid=#{sid}' 'https://scrapbox.io/api/pages/#{project}/#{title}/text'`
 
