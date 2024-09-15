@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+#
+# 全プロジェクトの全メンバをリストする
+#
+
+projects = `sbprojects`.split
+
+projects.each { |project|
+  puts "#{project}"
+  members = `sbmembers #{project}`.split(/\n/)
+  members.each { |member|
+    puts " #{member}"
+  }
+}
