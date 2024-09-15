@@ -3,6 +3,8 @@
 <ul>
   <li><b>sbprojects</b></li>
   自分のプロジェクトをリストする
+  <li><b>sbmembers</b> project</li>
+  プロジェクトのメンバをリストする
   <li><b>sbfind</b></li>
   自分のプロジェクトをリストするが、先頭ページ内にHelpfeel記法があるときはその記述も出力する
   <li><b>sbtitles</b> project</li>
