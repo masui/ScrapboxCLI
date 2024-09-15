@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Scrapboxプロジェクトのメンバをリストする
+#
+
+project=$1
+sid=`sid`; wget -q -O - --header "cookie: connect.sid=$sid" https://scrapbox.io/api/projects/$project | jq -r '.users[] | .name+" "+.email'
