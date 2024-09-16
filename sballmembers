@@ -1,14 +1,42 @@
 #!/usr/bin/env ruby
 #
-# 全プロジェクトの全メンバをリストする
+# 自分が関連する全プロジェクトの全メンバをリストする
+# -j オプションをつけるとJSON出力する
 #
 
-projects = `sbprojects`.split
+output_json = false
+output_json = true if ARGV[0] == '-j'
 
-projects.each { |project|
-  puts "#{project}"
-  members = `sbmembers #{project}`.split(/\n/)
-  members.each { |member|
-    puts " #{member}"
+projects = `sbprojects`.split(/\n/)
+
+if output_json
+  require 'json'
+  
+  outdata = {}
+  pages = []
+  outdata['pages'] = pages
+  
+  projects.each { |project|
+    data = {}
+    data['title'] = project
+    lines = []
+    lines << project
+    lines << "[/#{project}]"
+    lines << ""
+    members = `sbmembers #{project}`.split(/\n/)
+    members.each { |member|
+      lines << " [#{member}]"
+    }
+    data['lines'] = lines
+    pages << data
   }
-}
+  puts outdata.to_json
+else
+  projects.each { |project|
+    puts "#{project}"
+    members = `sbmembers #{project}`.split(/\n/)
+    members.each { |member|
+      puts " #{member}"
+    }
+  }
+end
