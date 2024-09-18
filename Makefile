@@ -1,2 +1,2 @@
 list:
-	sballmembers | uniq -c | sort -r -n > all.txt
+	sballmembers | sort | uniq -c | sort -r -n > all.txt
